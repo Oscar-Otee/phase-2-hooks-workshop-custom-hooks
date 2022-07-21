@@ -2,8 +2,17 @@ import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 
 /* ✅ modify this usePokemon custom hook to take in a query as an argument */
-export function usePokemon() {
+export function usePokemon(query) {
   /* ✅ this hook should only return one thing: an object with the pokemon data */
+  const [pokemon, setPokemon] = useState(null);
+
+  useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${query}`)
+      .then(r => r.json())
+      .then(setPokemon);
+  }, [query]);
+
+  return { data: pokemon };
 }
 
 function Pokemon({ query }) {
@@ -77,3 +86,5 @@ const Wrapper = styled.section`
     width: 100%;
   }
 `;
+
+
